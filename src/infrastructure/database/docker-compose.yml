@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  db:
+    container_name: gym-postgres
+    image: postgres
+    environment:
+      - POSTGRES_DB=gym
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - '5432:5432'
