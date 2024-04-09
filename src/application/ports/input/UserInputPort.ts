@@ -1,6 +1,7 @@
 import { UserOutputPostgres } from './../../../infrastructure/database/adapters/output/UserOutputPostgres';
 import { User } from '../../../domain/entity/User';
 import { UserRequest } from '../../../domain/requests/UserRequest';
+import { sign } from 'jsonwebtoken';
 
 export class UserInputPort {
   userOutputPostgres: UserOutputPostgres;
@@ -26,14 +27,21 @@ export class UserInputPort {
     await this.userOutputPostgres.deleteUserById(id);
   }
 
-  async login(email: string, password: string): Promise<boolean> {
+  async login(email: string, password: string): Promise<string> {
     try {
       const user = await this.userOutputPostgres.getUserByEmail(email);
-      if(user.password === password) return true;
+
+      if(user.password === password) {
+        const token = sign({userId: user.id, username: user.name, role: user.role}, 'privateKeyTest', {
+          expiresIn: '1h'
+        })
+        return token;
+      }
       
-      return false;
+      return 'Authentication failed';
     } catch(error) {
-      return false;
+      console.error(error)
+      return 'Authentication failed';
     }
   }
 }

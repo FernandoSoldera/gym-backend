@@ -3,12 +3,12 @@ import { PhysicalEvaluationDTO } from './PhysicalEvaluationDTO';
 
 @Entity()
 export class UserDTO {
-  constructor(id: number, name: string, email: string, role: string, sex: string, birthday: Date, password: string) {
+  constructor(id: number, name: string, email: string, role: string, gender: string, birthday: Date, password: string) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.role = role;
-    this.sex = sex;
+    this.gender = gender;
     this.birthday = birthday;
     this.password = password;
   }
@@ -26,7 +26,7 @@ export class UserDTO {
   role: string;
 
   @Column()
-  sex: string;
+  gender: string;
 
   @Column()
   birthday: Date;

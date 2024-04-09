@@ -1,5 +1,6 @@
 import { UserInputPort } from '../../../../application/ports/input/UserInputPort';
 import { Request, Response, Router } from 'express';
+import { UserToUserResponse } from '../converters/UserToUserResponse';
 
 const router = Router();
 
@@ -21,7 +22,7 @@ router.get('/user/:id', async (req: Request, res: Response) => {
   const userInputPort = new UserInputPort();
   var response = await userInputPort.getUserById(parseInt(req.params.id));
 
-  res.status(200).json(response);
+  res.status(200).json(UserToUserResponse.convert(response));
 });
 
 router.delete('/user/:id', async (req: Request, res: Response) => {
@@ -34,10 +35,10 @@ router.delete('/user/:id', async (req: Request, res: Response) => {
 router.post('/user/login', async (req: Request, res: Response) => {
   const userInputPort = new UserInputPort();
   var response = await userInputPort.login(req.body.email, req.body.password);
-  if(response) {
-    res.status(200).json(true);
+  if(response !== 'Authentication failed') {
+    res.status(200).json({token: response});
   } else {
-    res.status(200).json(false);
+    res.status(401).json({ error: response });
   }
 });
 

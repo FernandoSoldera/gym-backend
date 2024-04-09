@@ -6,13 +6,13 @@ export class UserDtoToUser {
         const users: User[] = [];
         
         userDto.forEach((userDto) => {
-            users.push(new User(userDto.id, userDto.name, userDto.email, userDto.role, userDto.sex, userDto.birthday, userDto.password));
+            users.push(new User(userDto.id, userDto.name, userDto.email, userDto.role, userDto.gender, userDto.birthday, userDto.password));
         })
 
         return users;
     }
 
     static convert(userDto: UserDTO): User {
-        return new User(userDto.id, userDto.name, userDto.email, userDto.role, userDto.sex, userDto.birthday, userDto.password);
+        return new User(userDto.id, userDto.name, userDto.email, userDto.role, userDto.gender, userDto.birthday, userDto.password);
     }
 }

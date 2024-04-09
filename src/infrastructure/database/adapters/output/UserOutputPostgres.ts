@@ -41,6 +41,6 @@ export class UserOutputPostgres {
   }
 
   private toDto(user: User): UserDTO {
-    return new UserDTO(user.id, user.name, user.email, user.role, user.sex, user.birthday, user.password);
+    return new UserDTO(user.id, user.name, user.email, user.role, user.gender, user.birthday, user.password);
   }
 }
